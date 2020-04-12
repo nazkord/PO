@@ -1,3 +1,2 @@
-# PO
-## AGH PO class
-Jeśli pomogłem daj gwiazdkę <3
+# AGH PO class
+## Jeśli pomogłem daj gwiazdkę <3
