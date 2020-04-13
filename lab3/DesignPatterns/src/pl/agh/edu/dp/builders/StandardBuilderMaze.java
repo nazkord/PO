@@ -2,8 +2,6 @@ package pl.agh.edu.dp.builders;
 
 import pl.agh.edu.dp.labirynth.*;
 
-import java.security.KeyPair;
-
 public class StandardBuilderMaze implements MazeBuilder {
 
     private Maze currentMaze;
@@ -23,33 +21,18 @@ public class StandardBuilderMaze implements MazeBuilder {
     }
 
     @Override
-    public void joinRooms(Direction direction1, Room r1, Direction direction2, Room r2) {
+    public void makeWall(Direction direction, Room r1, Room r2) {
         Wall joiningWall = new Wall();
-        r1.setSide(direction1, joiningWall);
-        r2.setSide(direction2, joiningWall);
-    }
-
-    @Override
-    public void joinRooms(Room r1, Room r2) {
-        joinRooms(CommonWallDirection(), r1, CommonWallDirection(), r2);
+        r1.setSide(direction, joiningWall);
+        r2.setSide(Direction.getOppositeTo(direction), joiningWall);
     }
 
     @Override
     public void makeDoorBetween(Room r1, Room r2) {
-
-        //loops for finding wall (directions) that joins rooms
-        Direction[] directionList = Direction.values();
-        for (Direction currentDirection : directionList) {
-            for (Direction direction : directionList) {
-                if(r1.getSide(currentDirection).equals(r2.getSide(direction))) {
-                    Door door = new Door(r1, r2);
-                    r1.setSide(currentDirection, door);
-                    r2.setSide(direction, door);
-                    return;
-                }
-            }
-        }
-//        return 1;
+        Door door = new Door(r1, r2);
+        Direction doorDirection = getCommonWallDirection(r1, r2);
+        r1.setSide(doorDirection, door);
+        r2.setSide(Direction.getOppositeTo(doorDirection), door);
     }
 
     public Maze getResultedMaze() {
@@ -58,7 +41,15 @@ public class StandardBuilderMaze implements MazeBuilder {
         return product;
     }
 
-    private Direction CommonWallDirection() {
-        return Direction.North;
+    private Direction getCommonWallDirection(Room r1, Room r2) {
+        //loops for finding wall (directions) that joins rooms
+        Direction[] directionList = Direction.values();
+        for (Direction currentDirection : directionList) {
+            Direction oppositeDirection = Direction.getOppositeTo(currentDirection);
+            if(r1.getSide(currentDirection).equals(r2.getSide(oppositeDirection))) {
+                return currentDirection;
+            }
+        }
+        throw new IllegalArgumentException("Cannot make door between Room1 (id: " + r1.getRoomId() + ") i Room2 (id: " + r2.getRoomId() + ")");
     }
 }

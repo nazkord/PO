@@ -1,5 +1,6 @@
 package pl.agh.edu.dp.builders;
 
+import pl.agh.edu.dp.labirynth.Counters;
 import pl.agh.edu.dp.labirynth.Direction;
 import pl.agh.edu.dp.labirynth.Room;
 
@@ -7,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CountingMazeBuilder implements MazeBuilder {
 
-    private AtomicInteger count;
+    private Counters counters;
 
     public CountingMazeBuilder() {
         this.reset();
@@ -15,36 +16,29 @@ public class CountingMazeBuilder implements MazeBuilder {
 
     @Override
     public void reset() {
-        count = new AtomicInteger(0);
+        counters = new Counters();
     }
 
     @Override
     public void addRoom(Room room) {
-        incrementCount();
+        counters.setRoomCounter(counters.getRoomCounter() + 1);
+        counters.setWallCounter(counters.getWallCounter() + 4);
     }
 
     @Override
-    public void joinRooms(Direction direction1, Room r1, Direction direction2, Room r2) {
-        joinRooms(r1, r2);
-    }
-
-    @Override
-    public void joinRooms(Room r1, Room r2) {
-        incrementCount();
+    public void makeWall(Direction direction1, Room r1, Room r2) {
+        counters.setWallCounter(counters.getWallCounter() - 1);
     }
 
     @Override
     public void makeDoorBetween(Room r1, Room r2) {
-        incrementCount();
+        counters.setWallCounter(counters.getWallCounter() - 1);
+        counters.setDoorCounter(counters.getDoorCounter() + 1);
     }
 
-    public int getCount() {
-        AtomicInteger result = count;
+    public Counters getCount() {
+        Counters result = counters;
         this.reset();
-        return result.get();
-    }
-
-    private void incrementCount() {
-        count.incrementAndGet();
+        return result;
     }
 }

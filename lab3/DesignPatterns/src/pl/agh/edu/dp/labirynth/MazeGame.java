@@ -30,9 +30,13 @@ public class MazeGame {
     public void createMaze(MazeBuilder builder) {
         Room A = new Room();
         Room B = new Room();
+        Room C = new Room();
         builder.addRoom(A);
         builder.addRoom(B);
-        builder.joinRooms(A, B);
+        builder.addRoom(C);
+        builder.makeWall(Direction.West, A, B);
         builder.makeDoorBetween(A, B);
+        builder.makeWall(Direction.North, B, C);
+        builder.makeDoorBetween(B, C);
     }
 }
