@@ -1,12 +1,13 @@
-package pl.agh.edu.dp.labirynth;
+package pl.agh.edu.dp.factories;
 
 import pl.agh.edu.dp.builders.MazeBuilder;
-import pl.agh.edu.dp.factories.MazeFactory;
+import pl.agh.edu.dp.labirynth.Direction;
+import pl.agh.edu.dp.labirynth.Maze;
 import pl.agh.edu.dp.labirynth.doors.Door;
 import pl.agh.edu.dp.labirynth.rooms.Room;
 import pl.agh.edu.dp.labirynth.walls.Wall;
 
-public class MazeGame {
+public class MazeDirector {
 
     public Maze createMaze(){
         Maze maze = new Maze();
@@ -18,7 +19,7 @@ public class MazeGame {
 
         maze.addRoom(r1);
         maze.addRoom(r2);
-        
+
         return maze;
     }
 
@@ -35,7 +36,15 @@ public class MazeGame {
         builder.attachDoor(new Door(B, C));
     }
 
-    public void createMaze(MazeBuilder builder, MazeFactory factory) {
+    public void createEnchantedMaze(MazeBuilder builder) {
+        createMaze(builder, EnchantedMazeFactory.getInstance());
+    }
+
+    public void createBombedMaze(MazeBuilder builder) {
+        createMaze(builder, BombedMazeFactory.getInstance());
+    }
+
+    private void createMaze(MazeBuilder builder, MazeFactory factory) {
         Room A = factory.createRoom();
         Room B = factory.createRoom();
         Room C = factory.createRoom();

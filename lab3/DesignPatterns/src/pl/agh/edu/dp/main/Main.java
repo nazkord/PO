@@ -2,41 +2,33 @@ package pl.agh.edu.dp.main;
 
 import pl.agh.edu.dp.builders.CountingMazeBuilder;
 import pl.agh.edu.dp.builders.StandardBuilderMaze;
-import pl.agh.edu.dp.factories.BombedMazeFactory;
-import pl.agh.edu.dp.factories.EnchantedMazeFactory;
-import pl.agh.edu.dp.factories.MazeFactory;
-import pl.agh.edu.dp.labirynth.*;
+import pl.agh.edu.dp.factories.MazeDirector;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        MazeGame mazeGame = new MazeGame();
+        MazeDirector mazeDirector = new MazeDirector();
 
         StandardBuilderMaze standardBuilderMaze = new StandardBuilderMaze();
-        mazeGame.createMaze(standardBuilderMaze);
+        mazeDirector.createMaze(standardBuilderMaze);
         System.out.println(standardBuilderMaze.getResultedMaze().getRoomNumbers());
 
         CountingMazeBuilder countingMazeBuilder = new CountingMazeBuilder();
-        mazeGame.createMaze(countingMazeBuilder);
+        mazeDirector.createMaze(countingMazeBuilder);
         System.out.println(countingMazeBuilder.getCount());
 
-        MazeFactory factory = new EnchantedMazeFactory();
-        MazeFactory factory1 = new BombedMazeFactory();
 
-        mazeGame.createMaze(standardBuilderMaze, factory);
+        mazeDirector.createEnchantedMaze(standardBuilderMaze);
         System.out.println(standardBuilderMaze.getResultedMaze().getRoomNumbers());
 
-        mazeGame.createMaze(countingMazeBuilder, factory);
+        mazeDirector.createEnchantedMaze(countingMazeBuilder);
         System.out.println(countingMazeBuilder.getCount());
 
-        mazeGame.createMaze(standardBuilderMaze, factory1);
+        mazeDirector.createBombedMaze(standardBuilderMaze);
         System.out.println(standardBuilderMaze.getResultedMaze().getRoomNumbers());
 
-        mazeGame.createMaze(countingMazeBuilder, factory1);
+        mazeDirector.createBombedMaze(countingMazeBuilder);
         System.out.println(countingMazeBuilder.getCount());
     }
 }
-
-
-

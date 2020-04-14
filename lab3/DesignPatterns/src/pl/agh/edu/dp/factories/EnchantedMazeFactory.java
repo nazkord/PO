@@ -9,6 +9,23 @@ import pl.agh.edu.dp.labirynth.walls.Wall;
 
 public class EnchantedMazeFactory implements MazeFactory {
 
+    private static EnchantedMazeFactory instance;
+
+    private EnchantedMazeFactory() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    static EnchantedMazeFactory getInstance() {
+        if (instance == null) {
+            instance = new EnchantedMazeFactory();
+        }
+        return instance;
+    }
+
     @Override
     public Room createRoom() {
         return new EnchantedRoom(EnchantedWall::new);
