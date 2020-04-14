@@ -11,6 +11,13 @@ public class Counters {
         this.doorCounter = 0;
     }
 
+    @Override
+    public String toString() {
+        return "Rooms=" + roomCounter +
+                ", Walls=" + wallCounter +
+                ", Doors=" + doorCounter;
+    }
+
     public int getRoomCounter() {
         return roomCounter;
     }
@@ -33,12 +40,5 @@ public class Counters {
 
     public void setDoorCounter(int doorCounter) {
         this.doorCounter = doorCounter;
-    }
-
-    @Override
-    public String toString() {
-        return "Rooms=" + roomCounter +
-                ", Walls=" + wallCounter +
-                ", Doors=" + doorCounter;
     }
 }

@@ -14,20 +14,15 @@ public class Main {
         MazeGame mazeGame = new MazeGame();
 
         StandardBuilderMaze standardBuilderMaze = new StandardBuilderMaze();
-        CountingMazeBuilder countingMazeBuilder = new CountingMazeBuilder();
-
-
         mazeGame.createMaze(standardBuilderMaze);
         System.out.println(standardBuilderMaze.getResultedMaze().getRoomNumbers());
 
-
+        CountingMazeBuilder countingMazeBuilder = new CountingMazeBuilder();
         mazeGame.createMaze(countingMazeBuilder);
         System.out.println(countingMazeBuilder.getCount());
 
-
         MazeFactory factory = new EnchantedMazeFactory();
         MazeFactory factory1 = new BombedMazeFactory();
-
 
         mazeGame.createMaze(standardBuilderMaze, factory);
         System.out.println(standardBuilderMaze.getResultedMaze().getRoomNumbers());

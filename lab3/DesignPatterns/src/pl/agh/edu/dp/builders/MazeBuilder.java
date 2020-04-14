@@ -9,5 +9,5 @@ public interface MazeBuilder {
     void reset();
     void addRoom(Room room);
     void attachWall(Wall wall, Direction direction, Room r1, Room r2);
-    void attachDoor(Door door); //Should I return 0/1 when adding door ends up with success/?
+    void attachDoor(Door door);
 }

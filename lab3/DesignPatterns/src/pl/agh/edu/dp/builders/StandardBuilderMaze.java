@@ -54,6 +54,7 @@ public class StandardBuilderMaze implements MazeBuilder {
                 return currentDirection;
             }
         }
-        throw new IllegalArgumentException("Cannot make door [no common wall] between Room1 (id: " + r1.getRoomId() + ") i Room2 (id: " + r2.getRoomId() + ")");
+        throw new IllegalArgumentException("Cannot make door [no common wall] between Room1 " +
+                "(id: " + r1.getRoomId() + ") i Room2 (id: " + r2.getRoomId() + ")");
     }
 }

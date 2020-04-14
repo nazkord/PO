@@ -8,6 +8,20 @@ import pl.agh.edu.dp.labirynth.walls.Wall;
 
 public class MazeGame {
 
+    public Maze createMaze(){
+        Maze maze = new Maze();
+
+        Room r1 = new Room(Wall::new);
+        Room r2 = new Room(Wall::new);
+
+        Door door = new Door(r1, r2);
+
+        maze.addRoom(r1);
+        maze.addRoom(r2);
+        
+        return maze;
+    }
+
     public void createMaze(MazeBuilder builder) {
         Room A = new Room(Wall::new);
         Room B = new Room(Wall::new);
@@ -15,14 +29,10 @@ public class MazeGame {
         builder.addRoom(A);
         builder.addRoom(B);
         builder.addRoom(C);
-        Wall wallA = new Wall();
-        builder.attachWall(wallA, Direction.West, A, B);
-        Door doorA = new Door(A, B);
-        builder.attachDoor(doorA);
-        Wall wallB = new Wall();
-        builder.attachWall(wallB, Direction.North, B, C);
-        Door doorB = new Door(B, C);
-        builder.attachDoor(doorB);
+        builder.attachWall(new Wall(), Direction.West, A, B);
+        builder.attachDoor(new Door(A, B));
+        builder.attachWall(new Wall(), Direction.North, B, C);
+        builder.attachDoor(new Door(B, C));
     }
 
     public void createMaze(MazeBuilder builder, MazeFactory factory) {
