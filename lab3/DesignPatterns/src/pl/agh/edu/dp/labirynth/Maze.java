@@ -1,5 +1,7 @@
 package pl.agh.edu.dp.labirynth;
 
+import pl.agh.edu.dp.labirynth.rooms.Room;
+
 import java.util.Vector;
 
 public class Maze {

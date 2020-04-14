@@ -1,4 +1,7 @@
-package pl.agh.edu.dp.labirynth;
+package pl.agh.edu.dp.labirynth.doors;
+
+import pl.agh.edu.dp.labirynth.MapSite;
+import pl.agh.edu.dp.labirynth.rooms.Room;
 
 public class Door extends MapSite {
     private Room room1;
@@ -11,7 +14,7 @@ public class Door extends MapSite {
 
     @Override
     public void enter(){
-
+        System.out.println("You went through the door");
     }
 
     public Room getRoom1() {

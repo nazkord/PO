@@ -1,6 +1,10 @@
 package pl.agh.edu.dp.builders;
 
-import pl.agh.edu.dp.labirynth.*;
+import pl.agh.edu.dp.labirynth.Direction;
+import pl.agh.edu.dp.labirynth.Maze;
+import pl.agh.edu.dp.labirynth.doors.Door;
+import pl.agh.edu.dp.labirynth.rooms.Room;
+import pl.agh.edu.dp.labirynth.walls.Wall;
 
 public class StandardBuilderMaze implements MazeBuilder {
 
@@ -21,15 +25,15 @@ public class StandardBuilderMaze implements MazeBuilder {
     }
 
     @Override
-    public void makeWall(Direction direction, Room r1, Room r2) {
-        Wall joiningWall = new Wall();
+    public void attachWall(Wall joiningWall, Direction direction, Room r1, Room r2) {
         r1.setSide(direction, joiningWall);
         r2.setSide(Direction.getOppositeTo(direction), joiningWall);
     }
 
     @Override
-    public void makeDoorBetween(Room r1, Room r2) {
-        Door door = new Door(r1, r2);
+    public void attachDoor(Door door) {
+        Room r1 = door.getRoom1();
+        Room r2 = door.getRoom2();
         Direction doorDirection = getCommonWallDirection(r1, r2);
         r1.setSide(doorDirection, door);
         r2.setSide(Direction.getOppositeTo(doorDirection), door);
@@ -50,6 +54,6 @@ public class StandardBuilderMaze implements MazeBuilder {
                 return currentDirection;
             }
         }
-        throw new IllegalArgumentException("Cannot make door between Room1 (id: " + r1.getRoomId() + ") i Room2 (id: " + r2.getRoomId() + ")");
+        throw new IllegalArgumentException("Cannot make door [no common wall] between Room1 (id: " + r1.getRoomId() + ") i Room2 (id: " + r2.getRoomId() + ")");
     }
 }

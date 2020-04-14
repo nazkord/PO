@@ -2,9 +2,9 @@ package pl.agh.edu.dp.builders;
 
 import pl.agh.edu.dp.labirynth.Counters;
 import pl.agh.edu.dp.labirynth.Direction;
-import pl.agh.edu.dp.labirynth.Room;
-
-import java.util.concurrent.atomic.AtomicInteger;
+import pl.agh.edu.dp.labirynth.doors.Door;
+import pl.agh.edu.dp.labirynth.rooms.Room;
+import pl.agh.edu.dp.labirynth.walls.Wall;
 
 public class CountingMazeBuilder implements MazeBuilder {
 
@@ -26,12 +26,12 @@ public class CountingMazeBuilder implements MazeBuilder {
     }
 
     @Override
-    public void makeWall(Direction direction1, Room r1, Room r2) {
+    public void attachWall(Wall wall, Direction direction, Room r1, Room r2) {
         counters.setWallCounter(counters.getWallCounter() - 1);
     }
 
     @Override
-    public void makeDoorBetween(Room r1, Room r2) {
+    public void attachDoor(Door door) {
         counters.setWallCounter(counters.getWallCounter() - 1);
         counters.setDoorCounter(counters.getDoorCounter() + 1);
     }
