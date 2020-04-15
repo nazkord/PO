@@ -1,5 +1,6 @@
 package pl.agh.edu.dp.labirynth.doors;
 
+import pl.agh.edu.dp.Player;
 import pl.agh.edu.dp.labirynth.rooms.Room;
 
 public class EnchantedDoor extends Door {
@@ -9,7 +10,7 @@ public class EnchantedDoor extends Door {
     }
 
     @Override
-    public void enter() {
-        System.out.println("You went through the enchanted door");
+    public String toString() {
+        return "Enchanted" + super.toString();
     }
 }

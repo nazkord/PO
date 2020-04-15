@@ -22,4 +22,17 @@ public class Maze {
     public int getRoomNumbers()  {
         return rooms.size();
     }
+
+    @Override
+    public String toString() {
+        return "Maze rooms:" + rooms;
+    }
+
+    public Room getStartRoom() {
+        return rooms.get(0);
+    }
+
+    public Room getEndRoom() {
+        return rooms.get(rooms.size() - 1);
+    }
 }

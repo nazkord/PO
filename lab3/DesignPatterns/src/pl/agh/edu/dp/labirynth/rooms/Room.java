@@ -1,5 +1,6 @@
 package pl.agh.edu.dp.labirynth.rooms;
 
+import pl.agh.edu.dp.Player;
 import pl.agh.edu.dp.labirynth.Direction;
 import pl.agh.edu.dp.labirynth.MapSite;
 import pl.agh.edu.dp.labirynth.walls.Wall;
@@ -20,6 +21,10 @@ public class Room extends MapSite {
         this.roomId = count.incrementAndGet();
     }
 
+    public Map<Direction, MapSite> getSides() {
+        return sides;
+    }
+
     public MapSite getSide(Direction direction){
         return this.sides.get(direction);
     }
@@ -33,8 +38,9 @@ public class Room extends MapSite {
     }
 
     @Override
-    public void enter(){
-        System.out.println("You came to the room");
+    public void enter(Player player) {
+        player.setCurrentRoom(this);
+        System.out.println("You came to the " + this.getClass().getSimpleName());
     }
 
     private void fillSides(Supplier<Wall> wallSupplier) {
@@ -44,4 +50,9 @@ public class Room extends MapSite {
         this.setSide(Direction.West, wallSupplier.get());
     }
 
+    @Override
+    public String toString() {
+        return "\nRoom{" + roomId +
+                ", " + sides;
+    }
 }
