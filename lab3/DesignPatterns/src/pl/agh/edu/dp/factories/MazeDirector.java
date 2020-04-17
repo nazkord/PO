@@ -57,4 +57,18 @@ public class MazeDirector {
         builder.attachDoor(factory.createDoor(B, C));
     }
 
+    public void checkSingletons() {
+        MazeFactory mazeFactory1 = EnchantedMazeFactory.getInstance();
+        MazeFactory mazeFactory2 = EnchantedMazeFactory.getInstance();
+        if(mazeFactory1.equals(mazeFactory2)) {
+            System.out.println("The same objects!");
+        }
+
+        MazeFactory mazeFactory3 = BombedMazeFactory.getInstance();
+        MazeFactory mazeFactory4 = BombedMazeFactory.getInstance();
+        if(mazeFactory3.equals(mazeFactory4)) {
+            System.out.println("The same objects!");
+        }
+    }
+
 }

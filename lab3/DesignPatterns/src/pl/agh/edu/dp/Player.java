@@ -3,10 +3,6 @@ package pl.agh.edu.dp;
 import pl.agh.edu.dp.labirynth.Direction;
 import pl.agh.edu.dp.labirynth.rooms.Room;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
 public class Player {
     private int health;
     private Room currentRoom;
@@ -20,18 +16,6 @@ public class Player {
         if(health > 0) {
             System.out.println("You received " + i + " damage");
         }
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public Room getCurrentRoom() {
-        return currentRoom;
-    }
-
-    public void setCurrentRoom(Room currentRoom) {
-        this.currentRoom = currentRoom;
     }
 
     public void moveLeft() {
@@ -55,5 +39,17 @@ public class Player {
         return "Player: " +
                 "health=" + health +
                 ", currentRoom=" + currentRoom.getRoomId();
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }
