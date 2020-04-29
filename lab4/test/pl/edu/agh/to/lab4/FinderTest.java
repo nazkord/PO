@@ -19,9 +19,9 @@ public class FinderTest {
 
     private PrintStream originalOut;
 
-    private Collection<CracovCitizen> allCracovCitizens = new ArrayList<CracovCitizen>();
+    private Collection<CracovCitizen> allCracovCitizens = new ArrayList<>();
 
-    private Map<String, Collection<Prisoner>> allPrisoners = new HashMap<String, Collection<Prisoner>>();
+    private Map<String, Collection<Prisoner>> allPrisoners = new HashMap<>();
 
     private Finder suspectFinder = new Finder(allCracovCitizens, allPrisoners);
 
@@ -77,7 +77,7 @@ public class FinderTest {
 
     private void addPrisoner(String category, Prisoner news) {
         if (!allPrisoners.containsKey(category))
-            allPrisoners.put(category, new ArrayList<Prisoner>());
+            allPrisoners.put(category, new ArrayList<>());
         allPrisoners.get(category).add(news);
     }
 }

@@ -1,38 +1,27 @@
 package pl.edu.agh.to.lab4;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 
-public class Prisoner {
+public class Prisoner extends Suspect{
 
     private final int judgementYear;
     private final int sentenceDuration;
     private final String pesel;
-    private final String name;
-    private final String surname;
 
     public Prisoner(String name, String surname, String pesel, int judgementYear, int sentenceDuration) {
-        this.name = name;
-        this.surname = surname;
+        super(name, surname);
         this.pesel = pesel;
         this.judgementYear = judgementYear;
         this.sentenceDuration = sentenceDuration;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
+    @Override
+    public boolean canBeAccused() {
+        return !IsJailedNow();
     }
 
     public boolean IsJailedNow() {
         return judgementYear + sentenceDuration >= getCurrentYear();
-    }
-
-    public String display() {
-        return name + " " + surname;
     }
 
     private int getCurrentYear() {

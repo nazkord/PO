@@ -20,43 +20,38 @@ public class Finder {
     }
 
     public void displayAllSuspectsWithName(String name) {
-        List<Prisoner> suspectedPrisoners = new ArrayList<>();
-        List<CracovCitizen> suspectedCracovCitizens = new ArrayList<>();
+        List<Suspect> suspects = new ArrayList<>();
 
         for (Collection<Prisoner> prisonerCollection : allPrisoners.values()) {
             for (Prisoner prisoner : prisonerCollection) {
-                if (!prisoner.IsJailedNow() && prisoner.getName().equals(name)) {
-                    suspectedPrisoners.add(prisoner);
+                if (isAppropriateSuspect(prisoner, name)) {
+                    suspects.add(prisoner);
                 }
-                if (suspectedPrisoners.size() >= 10) {
+                if (suspects.size() >= 10) {
                     break;
                 }
             }
-            if (suspectedPrisoners.size() >= 10) {
+            if (suspects.size() >= 10) {
                 break;
             }
         }
 
-        if (suspectedPrisoners.size() < 10) {
+        if (suspects.size() < 10) {
             for (CracovCitizen cracovCitizen : allCracovCitizens) {
-                if (cracovCitizen.getAge() > 18 && cracovCitizen.getName().equals(name)) {
-                    suspectedCracovCitizens.add(cracovCitizen);
+                if (isAppropriateSuspect(cracovCitizen, name)) {
+                    suspects.add(cracovCitizen);
                 }
-                if (suspectedPrisoners.size() + suspectedCracovCitizens.size() >= 10) {
+                if (suspects.size() >= 10) {
                     break;
                 }
             }
         }
 
-        int t = suspectedPrisoners.size() + suspectedCracovCitizens.size();
-        System.out.println("Znalazlem " + t + " pasujacych podejrzanych!");
+        System.out.println("Znalazlem " + suspects.size() + " pasujacych podejrzanych!");
+        suspects.forEach(suspect -> System.out.println(suspect.display()));
+    }
 
-        for (Prisoner n : suspectedPrisoners) {
-            System.out.println(n.display());
-        }
-
-        for (CracovCitizen p : suspectedCracovCitizens) {
-            System.out.println(p.display());
-        }
+    private boolean isAppropriateSuspect(Suspect suspect, String name) {
+        return suspect.canBeAccused() && suspect.getName().equals(name);
     }
 }

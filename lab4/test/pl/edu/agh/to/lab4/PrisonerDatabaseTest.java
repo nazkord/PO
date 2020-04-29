@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class PrisonerDatabaseTest {
 
-    private PrisonersDatabase prisonersDatabase = new PrisonersDatabase();
+    private final PrisonersDatabase prisonersDatabase = new PrisonersDatabase();
 
     @Test
     public void testThereAreThreeJails() {
