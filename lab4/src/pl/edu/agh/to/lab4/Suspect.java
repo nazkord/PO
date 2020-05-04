@@ -22,4 +22,9 @@ public abstract class Suspect {
     }
 
     public abstract boolean canBeAccused();
+
+    @Override
+    public String toString() {
+        return display();
+    }
 }

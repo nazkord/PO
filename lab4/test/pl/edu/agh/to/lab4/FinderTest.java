@@ -19,37 +19,44 @@ public class FinderTest {
 
     private PrintStream originalOut;
 
-    private Collection<CracovCitizen> allCracovCitizens = new ArrayList<>();
+    private PersonDataProvider personDataProvider;
 
-    private Map<String, Collection<Prisoner>> allPrisoners = new HashMap<>();
+    private PrisonersDatabase prisonersDatabase;
 
-    private Finder suspectFinder = new Finder(allCracovCitizens, allPrisoners);
+    private Finder suspectFinder;
+
+    @Before
+    public void setUp() {
+        personDataProvider = new PersonDataProvider();
+        prisonersDatabase = new PrisonersDatabase();
+        suspectFinder = new Finder(personDataProvider, prisonersDatabase);
+    }
 
     @Test
     public void testDisplayingNotJailedPrisoner() {
-        addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski", "802104543357", 2000, 1));
+        prisonersDatabase.addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski", "802104543357", 2000, 1));
         suspectFinder.displayAllSuspectsWithName("Jan");
         assertContentIsDisplayed("Jan Kowalski");
     }
 
     @Test
     public void testDisplayingSuspectedPerson() {
-        allCracovCitizens.add(new CracovCitizen("Jan", "Kowalski", 20));
+        personDataProvider.getAllCracovCitizens().add(new CracovCitizen("Jan", "Kowalski", 20));
         suspectFinder.displayAllSuspectsWithName("Jan");
         assertContentIsDisplayed("Jan Kowalski");
     }
 
     @Test
     public void testNotDisplayingTooYoungPerson() {
-        allCracovCitizens.add(new CracovCitizen("Jan", "Kowalski", 15));
+        personDataProvider.getAllCracovCitizens().add(new CracovCitizen("Jan", "Kowalski", 15));
         suspectFinder.displayAllSuspectsWithName("Jan");
         assertContentIsNotDisplayed("Jan Kowalski");
     }
 
     @Test
     public void testNotDisplayingJailedPrisoner() {
-        allCracovCitizens.add(new CracovCitizen("Jan", "Kowalski", 20));
-        addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski2", "802104543357", 2000, 20));
+        personDataProvider.getAllCracovCitizens().add(new CracovCitizen("Jan", "Kowalski", 20));
+        prisonersDatabase.addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski2", "802104543357", 2000, 20));
         suspectFinder.displayAllSuspectsWithName("Jan");
         assertContentIsNotDisplayed("Jan Kowalski2");
     }
@@ -73,11 +80,5 @@ public class FinderTest {
     @After
     public void resetSystemOut() {
         System.setOut(originalOut);
-    }
-
-    private void addPrisoner(String category, Prisoner news) {
-        if (!allPrisoners.containsKey(category))
-            allPrisoners.put(category, new ArrayList<>());
-        allPrisoners.get(category).add(news);
     }
 }
