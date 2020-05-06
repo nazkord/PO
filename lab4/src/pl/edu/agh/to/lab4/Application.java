@@ -1,5 +1,7 @@
 package pl.edu.agh.to.lab4;
 
+import com.sun.tools.javac.util.List;
+
 public class Application {
 
     public static void main(String[] args) {
@@ -24,7 +26,7 @@ public class Application {
         prisonersDatabase.addPrisoner("Wiezienie przedmiejskie", new Prisoner("Zbigniew", "Nienajedzony", "90051452335", 2011, 1));
         prisonersDatabase.addPrisoner("Wiezienie centralne", new Prisoner("Jan", "Przedziwny", "91103145223", 2009, 4));
         prisonersDatabase.addPrisoner("Wiezienie centralne", new Prisoner("Janusz", "Podejrzany", "85121212456", 2012, 1));
-        Finder suspects = new Finder(personDataProvider, prisonersDatabase);
+        Finder suspects = new Finder(new CompositeAggregate(List.of(personDataProvider, prisonersDatabase)));
         suspects.displayAllSuspectsWithName("Jan");
     }
 }

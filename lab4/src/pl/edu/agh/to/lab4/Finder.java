@@ -6,25 +6,18 @@ import java.util.List;
 
 public class Finder {
 
-    private final SuspectAggregate allCracovCitizens;
-    private final SuspectAggregate allPrisoners;
+    private final CompositeAggregate compositeAggregate;
 
-    public Finder(PersonDataProvider personDataProvider, PrisonersDatabase prisonersDatabase) {
-        this.allCracovCitizens = personDataProvider;
-        this.allPrisoners = prisonersDatabase;
+    public Finder(CompositeAggregate compositeAggregate) {
+        this.compositeAggregate = compositeAggregate;
     }
 
     public void displayAllSuspectsWithName(String name) {
-        Iterator<? extends Suspect> prisonersIterator = allPrisoners.iterator(name);
-        Iterator<? extends Suspect> cracovCitizensIterator = allCracovCitizens.iterator(name);
+        Iterator<Suspect> suspectIterator = compositeAggregate.iterator(name);
         List<Suspect> suspects = new ArrayList<>();
 
-        while(prisonersIterator.hasNext() && suspects.size() < 10) {
-            suspects.add(prisonersIterator.next());
-        }
-
-        while(cracovCitizensIterator.hasNext() && suspects.size() < 10) {
-            suspects.add(cracovCitizensIterator.next());
+        while(suspectIterator.hasNext() && suspects.size() < 10) {
+            suspects.add(suspectIterator.next());
         }
 
         System.out.println("Znalazlem " + suspects.size() + " pasujacych podejrzanych!");

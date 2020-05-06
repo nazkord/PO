@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.sun.tools.javac.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class FinderTest {
     public void setUp() {
         personDataProvider = new PersonDataProvider();
         prisonersDatabase = new PrisonersDatabase();
-        suspectFinder = new Finder(personDataProvider, prisonersDatabase);
+        suspectFinder = new Finder(new CompositeAggregate(List.of(personDataProvider, prisonersDatabase)));
     }
 
     @Test
