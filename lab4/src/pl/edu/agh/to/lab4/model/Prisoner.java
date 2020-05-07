@@ -1,7 +1,5 @@
 package pl.edu.agh.to.lab4.model;
 
-import pl.edu.agh.to.lab4.model.Suspect;
-
 import java.time.LocalDate;
 
 public class Prisoner extends Suspect {

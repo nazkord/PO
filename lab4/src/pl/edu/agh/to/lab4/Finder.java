@@ -7,7 +7,6 @@ import pl.edu.agh.to.lab4.searchStrategy.CompositeSearchStrategy;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Finder {
 

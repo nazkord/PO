@@ -1,7 +1,5 @@
 package pl.edu.agh.to.lab4.model;
 
-import pl.edu.agh.to.lab4.model.Suspect;
-
 public class CracovCitizen extends Suspect {
 
     public CracovCitizen(String name, String surname, int age) {
