@@ -1,8 +1,13 @@
-package pl.edu.agh.to.lab4;
+package pl.edu.agh.to.lab4.dataProvider;
+
+import pl.edu.agh.to.lab4.SuspectIterator;
+import pl.edu.agh.to.lab4.model.CracovCitizen;
+import pl.edu.agh.to.lab4.model.Suspect;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 public class PersonDataProvider implements SuspectAggregate {
 
@@ -16,7 +21,7 @@ public class PersonDataProvider implements SuspectAggregate {
     }
 
     @Override
-    public Iterator<Suspect> iterator(String name) {
-        return new SuspectIterator(cracovCitizens.iterator(), name);
+    public Iterator<Suspect> iterator(Predicate<Suspect> filter) {
+        return new SuspectIterator(cracovCitizens.iterator(), filter);
     }
 }

@@ -1,24 +1,27 @@
 package pl.edu.agh.to.lab4;
 
+import pl.edu.agh.to.lab4.model.Suspect;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 public class SuspectIterator implements Iterator<Suspect> {
 
     Suspect suspect;
     Iterator<? extends Suspect> iterator;
-    String name;
+    Predicate<Suspect> filter;
 
-    public SuspectIterator(Iterator<? extends Suspect> iterator, String name) {
+    public SuspectIterator(Iterator<? extends Suspect> iterator, Predicate<Suspect> filter) {
         this.iterator = iterator;
-        this.name = name;
+        this.filter = filter;
     }
 
     @Override
     public boolean hasNext() {
         while(iterator.hasNext()) {
             Suspect tempSuspect = iterator.next();
-            if(tempSuspect.getName().equals(name) && tempSuspect.canBeAccused()) {
+            if(filter.test(tempSuspect) && tempSuspect.canBeAccused()) {
                 suspect = tempSuspect;
                 return true;
             }

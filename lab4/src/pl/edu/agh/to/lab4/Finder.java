@@ -1,8 +1,13 @@
 package pl.edu.agh.to.lab4;
 
+import pl.edu.agh.to.lab4.dataProvider.CompositeAggregate;
+import pl.edu.agh.to.lab4.model.Suspect;
+import pl.edu.agh.to.lab4.searchStrategy.CompositeSearchStrategy;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Finder {
 
@@ -12,8 +17,8 @@ public class Finder {
         this.compositeAggregate = compositeAggregate;
     }
 
-    public void displayAllSuspectsWithName(String name) {
-        Iterator<Suspect> suspectIterator = compositeAggregate.iterator(name);
+    public void display(CompositeSearchStrategy searchStrategy) {
+        Iterator<Suspect> suspectIterator = compositeAggregate.iterator(searchStrategy);
         List<Suspect> suspects = new ArrayList<>();
 
         while(suspectIterator.hasNext() && suspects.size() < 10) {

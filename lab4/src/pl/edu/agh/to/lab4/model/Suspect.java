@@ -1,12 +1,18 @@
-package pl.edu.agh.to.lab4;
+package pl.edu.agh.to.lab4.model;
 
 public abstract class Suspect {
     private final String name;
     private final String surname;
+    private final int age;
 
-    public Suspect(String name, String surname) {
+    public Suspect(String name, String surname, int age) {
         this.name = name;
         this.surname = surname;
+        this.age = age;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     public String getName() {

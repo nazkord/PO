@@ -1,6 +1,11 @@
-package pl.edu.agh.to.lab4;
+package pl.edu.agh.to.lab4.dataProvider;
+
+import pl.edu.agh.to.lab4.SuspectIterator;
+import pl.edu.agh.to.lab4.model.Prisoner;
+import pl.edu.agh.to.lab4.model.Suspect;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class PrisonersDatabase implements SuspectAggregate {
@@ -20,11 +25,11 @@ public class PrisonersDatabase implements SuspectAggregate {
     }
 
     @Override
-    public Iterator<Suspect> iterator(String name) {
+    public Iterator<Suspect> iterator(Predicate<Suspect> filter) {
         Iterator<Prisoner> prisonerIterator = prisoners.values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList())
                 .iterator();
-        return new SuspectIterator(prisonerIterator, name);
+        return new SuspectIterator(prisonerIterator, filter);
     }
 }

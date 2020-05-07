@@ -2,15 +2,19 @@ package pl.edu.agh.to.lab4;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 
 import com.sun.tools.javac.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import pl.edu.agh.to.lab4.dataProvider.CompositeAggregate;
+import pl.edu.agh.to.lab4.dataProvider.PersonDataProvider;
+import pl.edu.agh.to.lab4.model.CracovCitizen;
+import pl.edu.agh.to.lab4.model.Prisoner;
+import pl.edu.agh.to.lab4.dataProvider.PrisonersDatabase;
+import pl.edu.agh.to.lab4.searchStrategy.CompositeSearchStrategy;
+import pl.edu.agh.to.lab4.searchStrategy.NameSearchStrategy;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -35,30 +39,30 @@ public class FinderTest {
 
     @Test
     public void testDisplayingNotJailedPrisoner() {
-        prisonersDatabase.addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski", "802104543357", 2000, 1));
-        suspectFinder.displayAllSuspectsWithName("Jan");
+        prisonersDatabase.addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski",31, "802104543357", 2000, 1));
+        suspectFinder.display(new CompositeSearchStrategy(Collections.singletonList(new NameSearchStrategy("Jan"))));
         assertContentIsDisplayed("Jan Kowalski");
     }
 
     @Test
     public void testDisplayingSuspectedPerson() {
         personDataProvider.getAllCracovCitizens().add(new CracovCitizen("Jan", "Kowalski", 20));
-        suspectFinder.displayAllSuspectsWithName("Jan");
+        suspectFinder.display(new CompositeSearchStrategy(Collections.singletonList(new NameSearchStrategy("Jan"))));
         assertContentIsDisplayed("Jan Kowalski");
     }
 
     @Test
     public void testNotDisplayingTooYoungPerson() {
         personDataProvider.getAllCracovCitizens().add(new CracovCitizen("Jan", "Kowalski", 15));
-        suspectFinder.displayAllSuspectsWithName("Jan");
+        suspectFinder.display(new CompositeSearchStrategy(Collections.singletonList(new NameSearchStrategy("Jan"))));
         assertContentIsNotDisplayed("Jan Kowalski");
     }
 
     @Test
     public void testNotDisplayingJailedPrisoner() {
         personDataProvider.getAllCracovCitizens().add(new CracovCitizen("Jan", "Kowalski", 20));
-        prisonersDatabase.addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski2", "802104543357", 2000, 20));
-        suspectFinder.displayAllSuspectsWithName("Jan");
+        prisonersDatabase.addPrisoner("Wiezeienie stanowe", new Prisoner("Jan", "Kowalski2", 29,"802104543357", 2000, 20));
+        suspectFinder.display(new CompositeSearchStrategy(Collections.singletonList(new NameSearchStrategy("Jan"))));
         assertContentIsNotDisplayed("Jan Kowalski2");
     }
 

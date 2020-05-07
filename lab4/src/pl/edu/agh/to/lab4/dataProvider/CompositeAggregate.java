@@ -1,9 +1,13 @@
-package pl.edu.agh.to.lab4;
+package pl.edu.agh.to.lab4.dataProvider;
+
+import pl.edu.agh.to.lab4.dataProvider.SuspectAggregate;
+import pl.edu.agh.to.lab4.model.Suspect;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class CompositeAggregate implements SuspectAggregate {
 
@@ -14,10 +18,10 @@ public class CompositeAggregate implements SuspectAggregate {
     }
 
     @Override
-    public Iterator<Suspect> iterator(String name) {
+    public Iterator<Suspect> iterator(Predicate<Suspect> filter) {
         Collection<Suspect> suspects = new ArrayList<>();
         aggregates.forEach(sA -> {
-            Iterator<Suspect> iterator = sA.iterator(name);
+            Iterator<Suspect> iterator = sA.iterator(filter);
             while(iterator.hasNext()) {
                 suspects.add(iterator.next());
             }
