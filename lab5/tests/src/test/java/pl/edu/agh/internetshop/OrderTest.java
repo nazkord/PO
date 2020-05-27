@@ -105,6 +105,7 @@ public class OrderTest {
 				.forEach(i -> {
 					Product product = mock(Product.class);
 					given(product.getPrice()).willReturn(productPrice);
+					given(product.getDiscountedPrice()).willReturn(productPrice);
 					products.add(product);
 				});
 
@@ -153,6 +154,51 @@ public class OrderTest {
 		// then
 		assertBigDecimalCompareValue(order.getPriceWithTaxes(), BigDecimal.valueOf(0.15)); // 0.15 PLN
 																							
+	}
+
+	@Test
+	public void testProductDiscountedPrices() {
+		//given
+		Product product1 = mock(Product.class);
+		given(product1.getDiscountedPrice()).willReturn(BigDecimal.valueOf(2.5));  // 2.5 PLN
+		Product product2 = mock(Product.class);
+		given(product2.getDiscountedPrice()).willReturn(BigDecimal.valueOf(5)); // 5 PLN
+
+		//when
+		Order order = new Order(Arrays.asList(product1, product2));
+
+		//then
+		assertBigDecimalCompareValue(BigDecimal.valueOf(7.5), order.getPriceWithProductsDiscount()); // 7.5 PLN
+	}
+
+	@Test
+	public void testOrderDiscountWithRoundUp() {
+		//given
+		Product product1 = mock(Product.class);
+		given(product1.getDiscountedPrice()).willReturn(BigDecimal.valueOf(5));  // 5 PLN
+		Product product2 = mock(Product.class);
+		given(product2.getDiscountedPrice()).willReturn(BigDecimal.valueOf(0.7)); // 0.7 PLN
+
+		//when
+		Order order = new Order(Arrays.asList(product1, product2), new Discount(5)); // 5.7 PLN * 0.95 = 5.415 = 5.42 PLN
+
+		//then
+		assertBigDecimalCompareValue(BigDecimal.valueOf(5.42), order.getPriceWithOrderDiscount());
+	}
+
+	@Test
+	public void testOrderDiscountWithoutRounding() {
+		//given
+		Product product1 = mock(Product.class);
+		given(product1.getDiscountedPrice()).willReturn(BigDecimal.valueOf(5));  // 5 PLN
+		Product product2 = mock(Product.class);
+		given(product2.getDiscountedPrice()).willReturn(BigDecimal.valueOf(1)); // 1 PLN
+
+		//when
+		Order order = new Order(Arrays.asList(product1, product2), new Discount(8)); // 6 PLN * 0.92 = 5.52 PLN
+
+		//then
+		assertBigDecimalCompareValue(BigDecimal.valueOf(5.52), order.getPriceWithOrderDiscount());
 	}
 
 	@Test

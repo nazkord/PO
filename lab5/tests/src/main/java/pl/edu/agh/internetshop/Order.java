@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.function.Function;
 
 
 public class Order {
@@ -14,11 +15,24 @@ public class Order {
     private Shipment shipment;
     private ShipmentMethod shipmentMethod;
     private PaymentMethod paymentMethod;
+    private final Discount discount;
 
     public Order(List<Product> products) {
         this.products = Objects.requireNonNull(products);
         id = UUID.randomUUID();
         paid = false;
+        this.discount = new Discount(0);
+    }
+
+    public Order(List<Product> products, Discount discount) {
+        this.products = Objects.requireNonNull(products);
+        id = UUID.randomUUID();
+        paid = false;
+        this.discount = discount;
+    }
+
+    private BigDecimal applyDiscountTo(BigDecimal price) {
+        return discount.applyTo(price);
     }
 
     public UUID getId() {
@@ -44,13 +58,25 @@ public class Order {
     }
 
     public BigDecimal getPrice() {
+        return getPriceWithFunction((Product::getPrice));
+    }
+
+    public BigDecimal getPriceWithOrderDiscount() {
+        return applyDiscountTo(getPriceWithProductsDiscount());
+    }
+
+    public BigDecimal getPriceWithProductsDiscount() {
+        return getPriceWithFunction((Product::getDiscountedPrice));
+    }
+
+    private BigDecimal getPriceWithFunction(Function<Product, BigDecimal> function) {
         return products.stream()
-                .map(Product::getPrice)
-                .reduce(BigDecimal.valueOf(0), BigDecimal::add);
+                .map(function)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal getPriceWithTaxes() {
-        return getPrice().multiply(TAX_VALUE).setScale(Product.PRICE_PRECISION, Product.ROUND_STRATEGY);
+        return getPriceWithOrderDiscount().multiply(TAX_VALUE).setScale(Product.PRICE_PRECISION, Product.ROUND_STRATEGY);
     }
 
     public List<Product> getProducts() {
